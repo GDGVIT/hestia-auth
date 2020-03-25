@@ -40,7 +40,7 @@ router.route("/")
                 const token = jwt.sign({
                     _id: user.id
                 }, process.env.TOKEN_SECRET);
-                res.json({"token": token});
+                res.json({"Token": token});
             }
         });
     });
