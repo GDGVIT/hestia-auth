@@ -1,0 +1,23 @@
+//jshint esversion:6
+const express = require('express');
+const bodyParser = require('body-parser');
+const dotEnv = require('dotenv');
+const cors = require("cors");
+const app = express();
+app.use(bodyParser.json());
+app.use(
+    bodyParser.urlencoded({
+        extended: true
+    })
+);
+dotEnv.config();
+app.use(cors());
+app.get("/", (_req, res) => {
+    res.json({Response: "Server is up and running"});
+});
+
+app.listen(process.env.PORT, () => {
+    console.log("Server is up and running");
+});
+const auth = require("./routes/auth");
+app.use("/api/user", auth);
