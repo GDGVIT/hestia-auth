@@ -20,4 +20,7 @@ app.listen(process.env.PORT, () => {
     console.log("Server is up and running");
 });
 const auth = require("./routes/auth");
+const oAuth = require("./routes/oAuth");
+
 app.use("/api/user", auth);
+app.use("/api/user/oAuth", oAuth);
