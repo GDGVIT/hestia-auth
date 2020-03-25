@@ -33,7 +33,7 @@ router.route("/")
                         const token = jwt.sign({
                             _id: results.rows[0].id
                         }, process.env.TOKEN_SECRET);
-                        res.status(201).json({"Status": "Added a new user", "Token": token});
+                        res.status(201).json({"Token": token});
                     });
                 })
             } else {
