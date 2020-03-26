@@ -1,17 +1,13 @@
 //jshint esversion:8
 const router = require('express').Router();
-const Client = require('pg').Client;
+const Pool = require('pg').Pool;
 const {Bcrypt} = require('bcrypt-rust-wasm');
 const jwt = require("jsonwebtoken");
 const bcrypt = Bcrypt.new(parseInt(process.env.SALT_ROUNDS));
 const {registerValidation, loginValidation} = require("../validation");
-const client = new Client({
+const pool = new Pool({
     connectionString: process.env.DATABASE_URL,
     ssl: true
-});
-
-client.connect(() => {
-    console.log("connected to DB");
 });
 
 router.post("/register", (req, res) => {
@@ -23,7 +19,7 @@ router.post("/register", (req, res) => {
     if (error) {
         return res.status(400).send(error.details[0].message);
     }
-    client.query('SELECT * FROM users WHERE email = $1', [email], (error, results) => {
+    pool.query('SELECT * FROM users WHERE email = $1', [email], (error, results) => {
         if (error) {
             throw error
         }
@@ -31,7 +27,7 @@ router.post("/register", (req, res) => {
         if (user !== undefined) {
             return res.status(400).json({"Error": "Email already exists"});
         }
-        client.query('INSERT INTO users (name,email,phone,password) VALUES ($1,$2,$3,$4)', [name, email, phone, password], (err, _results) => {
+        pool.query('INSERT INTO users (name,email,phone,password) VALUES ($1,$2,$3,$4)', [name, email, phone, password], (err, _results) => {
             if (err) {
                 throw err;
             }
@@ -48,7 +44,7 @@ router.post("/login", (req, res) => {
     if (error) {
         return res.status(400).send(error.details[0].message);
     }
-    client.query('SELECT * FROM users WHERE email = $1', [email], (error, results) => {
+    pool.query('SELECT * FROM users WHERE email = $1', [email], (error, results) => {
         if (error) {
             throw error
         }

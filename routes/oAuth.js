@@ -5,28 +5,27 @@ const jwt = require("jsonwebtoken");
 const passport = require("passport");
 const passportConf = require("../passport");
 const passportGoogle = passport.authenticate('google-plus-token', {session: false});
-const Client = require('pg').Client;
-const client = new Client({
+const Pool = require('pg').Pool;
+const pool = new Pool({
     connectionString: process.env.DATABASE_URL,
     ssl: true
 });
-client.connect();
 router.route("/")
     .post(passportGoogle, (req, res) => {
         const name = req.user.displayName;
         const email = req.user.emails[0].value;
-        client.query('SELECT * FROM guser WHERE email = $1', [email], (error, results) => {
+        pool.query('SELECT * FROM guser WHERE email = $1', [email], (error, results) => {
             if (error) {
                 throw error;
             }
             const user = results.rows[0];
             if (user === undefined) {
-                client.query('INSERT INTO guser (name,email) VALUES ($1,$2)', [name, email], (err, results) => {
+                pool.query('INSERT INTO guser (name,email) VALUES ($1,$2)', [name, email], (err, results) => {
                     if (err) {
                         throw err;
                     }
                     console.log(results);
-                    client.query('SELECT * FROM guser WHERE email = $1', [email], (error, results) => {
+                    pool.query('SELECT * FROM guser WHERE email = $1', [email], (error, results) => {
                         if (error) {
                             throw error;
                         }
