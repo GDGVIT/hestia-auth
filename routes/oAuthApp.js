@@ -2,8 +2,8 @@ const router = require("express").Router();
 const jwt = require("jsonwebtoken");
 const gUser = require("../model/gUser");
 
-router.post("/",async(req,res)=>{
-   const {name,email} = req.body;
+router.post("/", async (req, res) => {
+    const {name, email} = req.body;
     try {
         const user = await gUser.findOne({where: {email}});
         if (user !== null) {

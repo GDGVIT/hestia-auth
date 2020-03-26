@@ -42,9 +42,9 @@ router.post("/login", async (req, res) => {
     }
     try {
         const {email, password} = req.body;
-        const user = await User.findOne({where:{email}});
-        if(user === null){
-            res.status(404).json({Error:"User Not Found"});
+        const user = await User.findOne({where: {email}});
+        if (user === null) {
+            res.status(404).json({Error: "User Not Found"});
         }
         const validPass = bcrypt.verifySync(password, user.password);
         if (!validPass) {
