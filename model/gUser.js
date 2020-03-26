@@ -8,6 +8,6 @@ const gUser = db.define('gusers',{
     email: {
         type: sequelize.STRING
     }
-});
+},{timestamps: false});
 
 module.exports = gUser;
