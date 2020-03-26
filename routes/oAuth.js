@@ -24,7 +24,6 @@ router.route("/")
                     if (err) {
                         throw err;
                     }
-                    console.log(results);
                     pool.query('SELECT * FROM guser WHERE email = $1', [email], (error, results) => {
                         if (error) {
                             throw error;
