@@ -22,7 +22,9 @@ app.listen(process.env.PORT, () => {
 const auth = require("./routes/auth");
 const oAuth = require("./routes/oAuth");
 const oAuthApp = require("./routes/oAuthApp");
+const verify = require("./routes/verify");
 
 app.use("/api/user", auth);
 app.use("/api/user/oAuth", oAuth);
 app.use("/api/user/oAuthApp",oAuthApp);
+app.use("/api/user/verify", verify);

@@ -31,9 +31,17 @@ router.post("/register", (req, res) => {
             if (err) {
                 throw err;
             }
-            res.status(201).json({"Status": "Added a new user"});
+            pool.query('SELECT * FROM users WHERE email = $1', [email],(error,results) =>{
+                if(error){
+                    throw error;
+                }
+                const user = results.rows[0];
+                const token = jwt.sign({
+                    _id: user.id
+                }, process.env.TOKEN_SECRET);
+                res.status(201).json({"Token":token});
+            });
         })
-
     });
 });
 
