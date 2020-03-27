@@ -13,7 +13,18 @@ const User = db.define('users', {
     },
     password: {
         type: sequelize.STRING
+    },
+    verified: {
+        type: sequelize.BOOLEAN,
+        defaultValue: false
     }
 }, {timestamps: false});
 
+User.sync({alter: true})
+    .then(() => {
+        console.log("Table created");
+    })
+    .catch(err => {
+        console.log(err);
+    });
 module.exports = User;
