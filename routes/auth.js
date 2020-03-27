@@ -4,7 +4,10 @@ const {Bcrypt} = require('bcrypt-rust-wasm');
 const bcrypt = Bcrypt.new(parseInt(process.env.SALT_ROUNDS));
 const jwt = require('jsonwebtoken');
 const {registerValidation, loginValidation} = require("../validation");
-
+const sgMail = require('@sendgrid/mail');
+const Verified = require('../model/Verified');
+const cryptoRandomString = require('crypto-random-string');
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 router.post("/register", async (req, res) => {
     const {error} = registerValidation(req.body);
     if (error) {
@@ -16,20 +19,29 @@ router.post("/register", async (req, res) => {
         if (emailExists !== null) {
             return res.status(400).json({"Error": "Email Already Exists"});
         }
-        const user = await User.create({
+        await User.create({
             name: name,
             email: email,
             phone: phone,
             password: bcrypt.hashSync(password)
         });
-        //Create a Token
-        const token = jwt.sign(
-            {
-                _id: user.id
-            },
-            process.env.TOKEN_SECRET
-        );
-        res.json({"Token": token});
+        const token =  cryptoRandomString({length:200, type:'url-safe'});
+        await Verified.create({
+            email: email,
+            token: token
+        });
+        const text = "https://" + req.hostname + "/api/user/verifyEmail/" + token;
+        const msg = {
+            to: 'hishaamakhtar2001.mha@gmail.com',
+            from: 'test@example.com',
+            subject: 'Sending with SendGrid is Fun',
+            text: text,
+        };
+        await sgMail.send(msg);
+        res.status(202).json({
+            "Status": "New user added",
+            "Verify": "Email sent for verification"
+        });
     } catch (err) {
         return res.status(400).json(err);
     }
