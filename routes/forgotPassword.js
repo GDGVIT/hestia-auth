@@ -13,7 +13,7 @@ router.post("/", async(req, res) => {
         return res.status(404).json({"Error":"Email Not Found"});
     }
     const token =  cryptoRandomString({length:200, type:'url-safe'});
-    const link = 'http://'+req.hostname+":3000/api/user/changePassword/"+token;
+    const link = 'https://'+req.hostname+"/api/user/changePassword/"+token;
     const emailTemplate = compiledFunctionForgotPassword({
         name: exists.name,
         link: link

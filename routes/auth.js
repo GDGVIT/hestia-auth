@@ -31,7 +31,7 @@ router.post("/register", async (req, res) => {
             email: email,
             token: token
         });
-        const text = "http://" + req.hostname + ":3000/api/user/verifyEmail/" + token;
+        const text = "https://" + req.hostname + "/api/user/verifyEmail/" + token;
         const emailTemplate = compiledFunctionEmail({
             name: name,
             link: text
