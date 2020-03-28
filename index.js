@@ -4,7 +4,6 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const dotEnv = require('dotenv');
 const db = require("./config/connection");
-const pug = require('pug');
 dotEnv.config();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -27,8 +26,8 @@ app.get("/", (req, res) => {
 app.listen(process.env.PORT, () => {
     console.log("Server is up and running");
 });
-app.set('view engine', 'pug');
-app.set('views', __dirname + "/public/views");
+app.set('view engine', 'ejs');
+app.set('views', __dirname + "/views");
 
 const auth = require('./routes/auth');
 const oAuth = require("./routes/oAuth");
