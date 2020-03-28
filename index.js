@@ -37,6 +37,9 @@ const updateUser = require("./routes/updateUser");
 const verifyEmail = require("./routes/verifyEmail");
 const forgotPassword = require("./routes/forgotPassword");
 const changePassword = require("./routes/changePassword");
+const getUserDetail = require("./routes/getUserDetail");
+const verifyUser = require("./routes/verifyUser");
+
 app.use("/api/user", auth);
 app.use("/api/user/oAuth", oAuth);
 app.use("/api/user/oAuthApp", oAuthApp);
@@ -45,3 +48,5 @@ app.use("/api/user/updateUser", updateUser);
 app.use("/api/user/verifyEmail", verifyEmail);
 app.use("/api/user/forgotPassword", forgotPassword);
 app.use("/api/user/changePassword",changePassword);
+app.use("/api/user/getUserDetail",getUserDetail);
+app.use("/api/user/verifyUser",verifyUser);

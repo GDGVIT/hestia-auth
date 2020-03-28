@@ -38,7 +38,7 @@ router.post("/register", async (req, res) => {
         });
         const msg = {
             to: email,
-            from: 'test@example.com',
+            from: 'dscvitvellore@gmail.com',
             subject: 'Sending with SendGrid is Fun',
             html: emailTemplate
         };
