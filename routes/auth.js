@@ -8,10 +8,11 @@ const sgMail = require('@sendgrid/mail');
 const Verified = require('../model/Verified');
 const cryptoRandomString = require('crypto-random-string');
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+const {compiledFunctionEmail} = require("../compiledPug");
 router.post("/register", async (req, res) => {
     const {error} = registerValidation(req.body);
     if (error) {
-        return res.status(400).send(error.details[0].message);
+        return res.status(400).json({"Error":error.details[0].message});
     }
     try {
         const {name, email, phone, password} = req.body;
@@ -30,12 +31,16 @@ router.post("/register", async (req, res) => {
             email: email,
             token: token
         });
-        const text = "https://" + req.hostname + "/api/user/verifyEmail/" + token;
+        const text = "http://" + req.hostname + ":3000/api/user/verifyEmail/" + token;
+        const emailTemplate = compiledFunctionEmail({
+            name: name,
+            link: text
+        });
         const msg = {
             to: 'hishaamakhtar2001.mha@gmail.com',
             from: 'test@example.com',
             subject: 'Sending with SendGrid is Fun',
-            text: text,
+            html: emailTemplate
         };
         await sgMail.send(msg);
         res.status(202).json({
@@ -50,7 +55,7 @@ router.post("/register", async (req, res) => {
 router.post("/login", async (req, res) => {
     const {error} = loginValidation(req.body);
     if (error) {
-        return res.status(400).send(error.details[0].message);
+        return res.status(400).json({"Error":error.details[0].message});
     }
     try {
         const {email, password} = req.body;
