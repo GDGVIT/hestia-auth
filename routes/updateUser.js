@@ -22,7 +22,7 @@ router.post("/", async (req, res) => {
         const decoded = jwt.verify(token, process.env.TOKEN_SECRET);
         const exists = await User.findOne({where: {id: decoded._id}});
         if (exists === null) {
-            return res.status(404).json({Error: "User doesnt exist"});
+            return res.status(404).json({Error: "No such user exists"});
         }
         if(email !== exists.email){
             const token =  cryptoRandomString({length:200, type:'url-safe'});
@@ -48,14 +48,14 @@ router.post("/", async (req, res) => {
                 phone: phone,
                 verified: false
             }, {where: {id: decoded._id}});
-            return res.json({"Status": "Updated and email sent successfully"});
+            return res.json({"Status": "Please check your new email"});
         }
         await User.update({
             name: name,
             email: email,
             phone: phone,
         }, {where: {id: decoded._id}});
-        return res.json({"Status": "Updated"});
+        return res.json({"Status": "All the details have been successfully updated."});
     } catch (err) {
         return res.status(400).json(err);
     }

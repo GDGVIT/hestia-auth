@@ -10,7 +10,7 @@ router.post("/", async(req, res) => {
     const email = req.body.email;
     const exists = await User.findOne({where: {email: email}});
     if(exists===null){
-        return res.status(404).json({"Error":"Email Not Found"});
+        return res.status(404).json({"Error":"No such user exists!"});
     }
     const token =  cryptoRandomString({length:200, type:'url-safe'});
     const link = 'https://'+req.hostname+"/api/user/changePassword/"+token;
@@ -29,7 +29,7 @@ router.post("/", async(req, res) => {
         email: email,
         token: token
     });
-    res.json({"Status":"Email sent successfully"});
+    res.json({"Status":"Email sent successfully. Please check your email"});
 });
 
 module.exports = router;

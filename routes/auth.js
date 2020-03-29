@@ -12,13 +12,13 @@ const {compiledFunctionEmail} = require("../compiledPug");
 router.post("/register", async (req, res) => {
     const {error} = registerValidation(req.body);
     if (error) {
-        return res.status(400).json({"Error":error.details[0].message});
+        return res.status(400).json({"Error": error.details[0].message});
     }
     try {
         const {name, email, phone, password} = req.body;
         const emailExists = await User.findOne({where: {email}});
         if (emailExists !== null) {
-            return res.status(400).json({"Error": "Email Already Exists"});
+            return res.status(400).json({Error: "There is already an account with this email!"});
         }
         await User.create({
             name: name,
@@ -26,7 +26,7 @@ router.post("/register", async (req, res) => {
             phone: phone,
             password: bcrypt.hashSync(password)
         });
-        const token =  cryptoRandomString({length:200, type:'url-safe'});
+        const token = cryptoRandomString({length: 200, type: 'url-safe'});
         await Verified.create({
             email: email,
             token: token
@@ -55,17 +55,17 @@ router.post("/register", async (req, res) => {
 router.post("/login", async (req, res) => {
     const {error} = loginValidation(req.body);
     if (error) {
-        return res.status(400).json({"Error":error.details[0].message});
+        return res.status(400).json({"Error": error.details[0].message});
     }
     try {
         const {email, password} = req.body;
         const user = await User.findOne({where: {email}});
         if (user === null) {
-            return res.status(404).json({Error: "User Not Found"});
+            return res.status(404).json({Error: "No such user exists!"});
         }
         const validPass = bcrypt.verifySync(password, user.password);
         if (!validPass) {
-            return res.status(401).send("Password is wrong");
+            return res.status(401).json({Error: "Oops! Looks like you've entered the wrong password"});
         }
         //Create a Token
         const token = jwt.sign(
