@@ -21,8 +21,7 @@ const updateValidation = data => {
     const schema = Joi.object({
         name: Joi.string().required(),
         email: Joi.string().email().required(),
-        phone: Joi.string().required().max(10).min(10),
-        password: Joi.string().required().min(8)
+        phone: Joi.string().required().max(10).min(10)
     });
     return schema.validate(data);
 };

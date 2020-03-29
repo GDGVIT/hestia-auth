@@ -11,7 +11,7 @@ router.post("/", async (req, res) => {
         return res.status(400).json({"Error":error.details[0].message});
     }
     try {
-        const {name, email, phone, password} = req.body;
+        const {name, email, phone} = req.body;
         const token = req.header('token');
         if (!token) {
             return res.status(401).json({Error: "Access is denied"});
@@ -25,7 +25,6 @@ router.post("/", async (req, res) => {
             name: name,
             email: email,
             phone: phone,
-            password: bcrypt.hashSync(password)
         }, {where: {id: decoded._id}});
         return res.json({"Status": "Updated"});
     } catch (err) {
