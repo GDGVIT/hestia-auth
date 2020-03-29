@@ -73,7 +73,7 @@ router.post("/register", async (req, res) => {
     request.post(verificationUrl, async(_error, _response, body) => {
         body = JSON.parse(body);
         if (body.success !== undefined && !body.success) {
-            return res.json({
+            return res.status(404).json({
                 responseCode: 1,
                 responseDesc: "Failed captcha verification"
             });
