@@ -48,7 +48,7 @@ router.post("/", async (req, res) => {
                 phone: phone,
                 verified: false
             }, {where: {id: decoded._id}});
-            return res.json({"Alert": "Please check your new email"});
+            return res.json({"Alert": "Your email has been updated. Please check your mail to verify it"});
         }
         await User.update({
             name: name,
