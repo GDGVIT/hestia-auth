@@ -21,7 +21,7 @@ router.post("/", async(req, res) => {
     const msg = {
         to: email,
         from: 'dscvitvellore@gmail.com',
-        subject: 'Sending with SendGrid is Fun',
+        subject: 'Password Change Requested',
         html: emailTemplate
     };
     await sgMail.send(msg);
