@@ -8,7 +8,7 @@ const Verified = db.define('verified', {
     token: {
         type: sequelize.STRING
     }
-}, {timestamps: false, freezeTableName: true});
+}, {freezeTableName: true});
 
 Verified.sync({alter: true})
     .then(() => {
