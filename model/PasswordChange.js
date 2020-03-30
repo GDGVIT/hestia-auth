@@ -1,14 +1,14 @@
 const sequelize = require("sequelize");
 const db = require("../config/connection");
 
-const PasswordChange = db.define('passwordChange', {
+const PasswordChange = db.define('passwordchange', {
     email: {
         type: sequelize.STRING
     },
     token: {
         type: sequelize.STRING
     }
-}, {freezeTableName: true});
+}, {timestamps:false,freezeTableName: true});
 
 PasswordChange.sync({alter: true})
     .then(() => {
