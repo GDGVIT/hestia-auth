@@ -8,7 +8,7 @@ const gUser = db.define('gusers', {
     email: {
         type: sequelize.STRING
     }
-});
+}, {timestamps: false});
 
 gUser.sync({alter: true})
     .then(() => {

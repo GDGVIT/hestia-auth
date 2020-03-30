@@ -18,7 +18,7 @@ const User = db.define('users', {
         type: sequelize.BOOLEAN,
         defaultValue: false
     }
-});
+}, {timestamps: false});
 
 User.sync({alter: true})
     .then(() => {
