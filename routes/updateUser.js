@@ -38,7 +38,7 @@ router.post("/", async (req, res) => {
             const msg = {
                 to: email,
                 from: 'dscvitvellore@gmail.com',
-                subject: 'Email Verification',
+                subject: '[NO REPLY]Email Verification',
                 html: emailTemplate
             };
             await sgMail.send(msg);
