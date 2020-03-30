@@ -141,7 +141,7 @@ router.post("/login", async (req, res) => {
             },
             process.env.TOKEN_SECRET
         );
-        res.json({"Token": token});
+        res.json({"Token": token,"id":user.id});
     } catch (err) {
         return res.status(400).json(err);
     }
