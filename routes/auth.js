@@ -32,7 +32,7 @@ router.post("/registerApp", async (req, res) => {
             email: email,
             token: token
         });
-        const text = "https://" + req.hostname + "/api/user/verifyEmail/" + token;
+        const text = "http://" + req.hostname + ":3000/api/user/verifyEmail/" + token;
         const emailTemplate = compiledFunctionEmail({
             name: name,
             link: text
@@ -56,7 +56,7 @@ router.post("/registerApp", async (req, res) => {
 router.post("/register", async (req, res) => {
     let token = req.header("g-recaptcha-response");
     if (!token) {
-        return res.json({ responseCode: 1, responseDesc: "Please select captcha" });
+        return res.json({responseCode: 1, responseDesc: "Please select captcha"});
     }
     const {error} = registerValidation(req.body);
     if (error) {
@@ -70,15 +70,14 @@ router.post("/register", async (req, res) => {
         token +
         "&remoteip=" +
         req.connection.remoteAddress;
-    request.post(verificationUrl, async(_error, _response, body) => {
+    request.post(verificationUrl, async (_error, _response, body) => {
         body = JSON.parse(body);
         if (body.success !== undefined && !body.success) {
             return res.status(404).json({
                 responseCode: 1,
                 responseDesc: "Failed captcha verification"
             });
-        }
-        else{
+        } else {
             try {
                 const {name, email, phone, password} = req.body;
                 const emailExists = await User.findOne({where: {email}});
@@ -141,7 +140,13 @@ router.post("/login", async (req, res) => {
             },
             process.env.TOKEN_SECRET
         );
-        res.json({"Token": token,"id":user.id});
+        res.json({
+            "Token": token,
+            "id": user.id,
+            "name": user.name,
+            "email":user.email,
+            "phone":user.phone
+        });
     } catch (err) {
         return res.status(400).json(err);
     }
