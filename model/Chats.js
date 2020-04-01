@@ -23,6 +23,6 @@ const Chats = db.define('chats', {
     receiver_name: {
         type: sequelize.TEXT
     }
-});
+}, {timestamps: false});
 
 module.exports = Chats;
