@@ -28,6 +28,9 @@ router.post("/", async (req, res) => {
         await Chats.update({
             receiver_name: name
         },{where:{request_receiver:decoded._id }});
+        await Chats.update({
+            sender_name: name
+        },{where:{request_sender:decoded._id }});
         if(email !== exists.email){
             const token =  cryptoRandomString({length:200, type:'url-safe'});
             await Verified.create({
