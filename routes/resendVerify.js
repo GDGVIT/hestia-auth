@@ -6,7 +6,8 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 const {compiledFunctionEmail} = require("../compiledPug");
 
 router.post("/",async(req,res)=>{
-   const email = req.body.email;
+    const email = req.body.email;
+    const name = req.body.name;
     const token = cryptoRandomString({length: 200, type: 'url-safe'});
     await Verified.create({
         email: email,
