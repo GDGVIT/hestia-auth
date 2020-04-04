@@ -40,6 +40,7 @@ const changePassword = require("./routes/changePassword");
 const getUserDetail = require("./routes/getUserDetail");
 const verifyUser = require("./routes/verifyUser");
 const getDetailsById = require('./routes/getDetailsById');
+const resendVerify = require("./routes/resendVerify");
 
 app.use("/api/user", auth);
 app.use("/api/user/oAuth", oAuth);
@@ -52,3 +53,4 @@ app.use("/api/user/changePassword",changePassword);
 app.use("/api/user/getUserDetail",getUserDetail);
 app.use("/api/user/verifyUser",verifyUser);
 app.use("/api/user/getDetailsById", getDetailsById);
+app.use("/api/user/resendVerify", resendVerify);
