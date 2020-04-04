@@ -3,12 +3,12 @@ const sgMail = require('@sendgrid/mail');
 const Verified = require('../model/Verified');
 const cryptoRandomString = require('crypto-random-string');
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-const {compiledFunctionEmail} = require("../compiledPug");
+const { compiledFunctionEmail } = require("../compiledPug");
 
-router.post("/",async(req,res)=>{
+router.post("/", async(req, res) => {
     const email = req.body.email;
     const name = req.body.name;
-    const token = cryptoRandomString({length: 200, type: 'url-safe'});
+    const token = cryptoRandomString({ length: 200, type: 'url-safe' });
     await Verified.create({
         email: email,
         token: token
@@ -21,7 +21,7 @@ router.post("/",async(req,res)=>{
     const msg = {
         to: email,
         from: 'dscvitvellore@gmail.com',
-        subject: 'Email Verification',
+        subject: '[NO REPLY]Email Verification',
         html: emailTemplate
     };
     await sgMail.send(msg);
