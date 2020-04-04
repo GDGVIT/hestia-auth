@@ -28,3 +28,5 @@ router.post("/",async(req,res)=>{
         "Verify": "Email sent for verification"
     });
 });
+
+module.exports = router;
