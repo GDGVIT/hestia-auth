@@ -12,7 +12,7 @@ const Chats = require("../model/Chats");
 router.post("/", async (req, res) => {
     const {error} = updateValidation(req.body);
     if (error) {
-        return res.status(400).json({"Error":error.details[0].message});
+        return res.status(400).json({"Error": error.details[0].message});
     }
     try {
         const {name, email, phone} = req.body;
@@ -25,18 +25,18 @@ router.post("/", async (req, res) => {
         if (exists === null) {
             return res.status(404).json({Error: "No such user exists"});
         }
-        const exist = await User.findOne({where: {email:email}});
-        if(exist){
-            return res.status(409).json({Error:"A user with this email already exists"});
+        const exist = await User.findOne({where: {email: email}});
+        if (exist) {
+            return res.status(409).json({Error: "A user with this email already exists"});
         }
         await Chats.update({
             receiver_name: name
-        },{where:{request_receiver:decoded._id }});
+        }, {where: {request_receiver: decoded._id}});
         await Chats.update({
             sender_name: name
-        },{where:{request_sender:decoded._id }});
-        if(email !== exists.email){
-            const token =  cryptoRandomString({length:200, type:'url-safe'});
+        }, {where: {request_sender: decoded._id}});
+        if (email !== exists.email) {
+            const token = cryptoRandomString({length: 200, type: 'url-safe'});
             await Verified.create({
                 email: email,
                 token: token
