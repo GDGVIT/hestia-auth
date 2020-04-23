@@ -26,7 +26,7 @@ router.post("/", async (req, res) => {
             return res.status(404).json({Error: "No such user exists"});
         }
         const exist = await User.findOne({where: {email: email}});
-        if (exist) {
+        if (exist!==null && exists.email!==exist.email) {
             return res.status(409).json({Error: "A user with this email already exists"});
         }
         await Chats.update({
