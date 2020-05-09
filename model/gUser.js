@@ -6,7 +6,8 @@ const gUser = db.define('gusers', {
         type: sequelize.STRING
     },
     email: {
-        type: sequelize.STRING
+        type: sequelize.STRING,
+        primaryKey: true
     }
 });
 

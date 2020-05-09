@@ -6,7 +6,8 @@ const User = db.define('users', {
         type: sequelize.STRING
     },
     email: {
-        type: sequelize.STRING
+        type: sequelize.STRING,
+        primaryKey: true
     },
     phone: {
         type: sequelize.STRING
