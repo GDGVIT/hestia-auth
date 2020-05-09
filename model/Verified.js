@@ -10,12 +10,12 @@ const Verified = db.define('verified', {
     }
 }, {freezeTableName: true});
 
-Verified.sync({alter: true})
-    .then(() => {
-        console.log("Table Created");
-    })
-    .catch(err => {
-        console.log(err);
-    });
+// Verified.sync({alter: true})
+//     .then(() => {
+//         console.log("Table Created");
+//     })
+//     .catch(err => {
+//         console.log(err);
+//     });
 
 module.exports = Verified;
