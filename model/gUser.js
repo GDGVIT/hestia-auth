@@ -10,12 +10,12 @@ const gUser = db.define('gusers', {
     }
 });
 
-// gUser.sync({alter: true})
-//     .then(() => {
-//         console.log("Table created");
-//     })
-//     .catch(err => {
-//         console.log(err);
-//     });
+gUser.sync({alter: true})
+    .then(() => {
+        console.log("Table created");
+    })
+    .catch(err => {
+        console.log(err);
+    });
 
 module.exports = gUser;

@@ -10,12 +10,12 @@ const PasswordChange = db.define('passwordchange', {
     }
 }, {freezeTableName: true});
 
-// PasswordChange.sync({alter: true})
-//     .then(() => {
-//         console.log("Table Created");
-//     })
-//     .catch(err => {
-//         console.log(err);
-//     });
+PasswordChange.sync({alter: true})
+    .then(() => {
+        console.log("Table Created");
+    })
+    .catch(err => {
+        console.log(err);
+    });
 
 module.exports = PasswordChange;

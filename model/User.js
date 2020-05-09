@@ -20,11 +20,11 @@ const User = db.define('users', {
     }
 });
 
-// User.sync({alter: true})
-//     .then(() => {
-//         console.log("Table created");
-//     })
-//     .catch(err => {
-//         console.log(err);
-//     });
+User.sync({alter: true})
+    .then(() => {
+        console.log("Table created");
+    })
+    .catch(err => {
+        console.log(err);
+    });
 module.exports = User;
