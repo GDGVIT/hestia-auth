@@ -2,24 +2,25 @@ const sequelize = require("sequelize");
 const db = require("../config/connection");
 
 const User = db.define('users', {
-    name: {
-        type: sequelize.STRING
-    },
-    email: {
-        type: sequelize.STRING,
-        primaryKey: true
-    },
-    phone: {
-        type: sequelize.STRING
-    },
-    password: {
-        type: sequelize.STRING
-    },
-    verified: {
-        type: sequelize.BOOLEAN,
-        defaultValue: false
+        name: {
+            type: sequelize.STRING
+        },
+        email: {
+            type: sequelize.STRING,
+            primaryKey: true
+        },
+        phone: {
+            type: sequelize.STRING
+        },
+        password: {
+            type: sequelize.STRING
+        },
+        verified: {
+            type: sequelize.BOOLEAN,
+            defaultValue: false
+        }
     }
-});
+);
 
 User.sync({alter: true})
     .then(() => {

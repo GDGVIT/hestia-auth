@@ -9,7 +9,9 @@ const PasswordChange = db.define('passwordchange', {
     token: {
         type: sequelize.STRING
     }
-}, {freezeTableName: true});
+}, {
+    freezeTableName: true,
+});
 
 PasswordChange.sync({alter: true})
     .then(() => {
