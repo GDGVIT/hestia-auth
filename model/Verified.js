@@ -4,7 +4,6 @@ const db = require("../config/connection");
 const Verified = db.define('verified', {
     email: {
         type: sequelize.STRING,
-        primaryKey: true
     },
     token: {
         type: sequelize.STRING

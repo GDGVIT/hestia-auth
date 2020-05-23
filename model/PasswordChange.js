@@ -4,7 +4,6 @@ const db = require("../config/connection");
 const PasswordChange = db.define('passwordchange', {
     email: {
         type: sequelize.STRING,
-        primaryKey: true
     },
     token: {
         type: sequelize.STRING
